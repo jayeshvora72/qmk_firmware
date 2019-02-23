@@ -63,8 +63,7 @@ inline void k19_ctrl_led_on(void)       { writePinHigh(B6); }
 inline void k19_alt_led_on(void)        { writePinHigh(B5); }
 inline void k19_shift_led_on(void)      { writePinHigh(D7); }
 inline void k19_spch_led_on(void)       { writePinHigh(D6); }
-inline void k19_media_led_on(void)      { writePinHigh(D5); }
-inline void k19_game_led_on(void)       { writePinHigh(C7); }
+inline void k19_media_led_on(void)      { writePinHigh(C7); }
 inline void k19_num_led_on(void)        { writePinHigh(C6); }
 inline void k19_caps_led_on(void)       { writePinHigh(B7); }
 
@@ -75,8 +74,7 @@ inline void k19_ctrl_led_off(void)      { writePinLow(B6); }
 inline void k19_alt_led_off(void)       { writePinLow(B5); }
 inline void k19_shift_led_off(void)     { writePinLow(D7); }
 inline void k19_spch_led_off(void)      { writePinLow(D6); }
-inline void k19_media_led_off(void)     { writePinLow(D5); }
-inline void k19_game_led_off(void)      { writePinLow(C7); }
+inline void k19_media_led_off(void)     { writePinLow(C7); }
 inline void k19_num_led_off(void)       { writePinLow(C6); }
 inline void k19_caps_led_off(void)      { writePinLow(B7); }
 
@@ -89,7 +87,6 @@ inline void k19_all_led_on(void)
     k19_shift_led_on();
     k19_spch_led_on();
     k19_media_led_on();
-    k19_game_led_on();
     k19_num_led_on();
     k19_caps_led_on();
 }
@@ -101,18 +98,16 @@ inline void k19_all_led_off(void)
     k19_shift_led_off();
     k19_spch_led_off();
     k19_media_led_off();
-    k19_game_led_off();
     k19_num_led_off();
     k19_caps_led_off();
 }
 
-/* Not sure about use of these methods; so commenting them out for now
+/* These are probably for PWM purpose. As PWM is not enabled, so commenting them out for now
 inline void k19_ctrl_led_set(uint8_t n)       { OCR1AL = n; }
 inline void k19_alt_led_set(uint8_t n)        { OCR1AH = n; }
 inline void k19_shift_led_set(uint8_t n)      { OCR1BL = n; }
 inline void k19_spch_led_set(uint8_t n)       { OCR1BH = n; }
 inline void k19_media_led_set(uint8_t n)      { OCR1CL = n; }
-inline void k19_game_led_set(uint8_t n)       { OCR1CH = n; }
 inline void k19_num_led_set(uint8_t n)        { OCR3AL = n; }
 inline void k19_caps_led_set(uint8_t n)       { OCR3AH = n; }
 
@@ -129,7 +124,6 @@ inline void k19_all_led_set(uint8_t n)
     k19_shift_led_set(n);
     k19_spch_led_set(n);
     k19_media_led_set(n);
-    k19_game_led_set(n);
     k19_num_led_set(n);
     k19_caps_led_set(n);
 }

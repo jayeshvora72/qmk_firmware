@@ -24,16 +24,15 @@
 #define NUMBER  1   // Number Layer
 #define SPCH    2   // Special Characters Layer
 #define MEDIA   3   // Multi Media Layer
-#define GAME    4   // Game Layer
 */
 enum layers {
   BASE,
   NUMBER,
   SPCH,
-  MEDIA,
-  GAME
+  MEDIA
 };
 
+// Though the custom keycode of EPRM is not used currently, have still maintained it here
 enum custom_keycodes {
   EPRM = SAFE_RANGE
 };
@@ -107,9 +106,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * --------------------------------------------------      --------------------------------------------------
  * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  | PgUp |      | Home |  F7  |  F8  |  F9  | F10  | F11  | F12  |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- * | Num                       | PScr | Paus | PgDn |      | End  |Media | Game                      | Menu |
+ * | Caps                      | PScr | Paus | PgDn |      | End  |Media | Num                       | Menu |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- * | Caps        |  2   |  3   |  4   |  5   | Esc  |      | Ins  |  6   |  7   |  8   |  9          | Win  |
+ * | Shft        |  2   |  3   |  4   |  5   | Esc  |      | Ins  |  6   |  7   |  8   |  9          | Win  |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
  * |         1   |  W   |  E   |  R   |  T   | Tab  |      | Del  |  Y   |  U   |  I   |  O   |  0          |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
@@ -125,8 +124,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [BASE] = LAYOUT_k19(
   KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_PGUP,        KC_HOME,    KC_F7,    KC_F8, KC_F9,   KC_F10, KC_F11, KC_F12,
-  TG(NUMBER),             KC_PSCR, KC_PAUS, KC_PGDN,        KC_END,     TG(MEDIA),TG(GAME),                       KC_APP,
-  KC_CAPS,      KC_2,  KC_3,  KC_4,  KC_5,  KC_ESC,         KC_INS,     KC_6,     KC_7,  KC_8,    KC_9,           KC_RWIN,
+  KC_CAPS,                KC_PSCR, KC_PAUS, KC_PGDN,        KC_END,     TG(MEDIA),TG(NUMBER),                     KC_APP,
+  OSM(MOD_LSFT),KC_2,  KC_3,  KC_4,  KC_5,  KC_ESC,         KC_INS,     KC_6,     KC_7,  KC_8,    KC_9,           KC_RWIN,
          KC_1,  KC_W,  KC_E,  KC_R,  KC_T,  KC_TAB,         KC_DEL,     KC_Y,     KC_U,  KC_I,    KC_O,   KC_0,
          KC_Q,  KC_S,  KC_D,  KC_F,  KC_G,  KC_BSPC,        KC_ENT,     KC_H,     KC_J,  KC_K,    KC_L,   KC_P,
          KC_A,  KC_X,  KC_C,  KC_V,  KC_B,  OSM(MOD_LALT),  OSL(SPCH),  KC_N,     KC_M,  KC_COMM, KC_DOT, KC_SCLN,
@@ -225,36 +224,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          ____,                ____,         ____,                   ____,  ____,                ____,  ____,
                                                                                          ____,  ____,  ____
 ),
-/* Keymap 4: Game Layer
- *
- * --------------------------------------------------      --------------------------------------------------
- * |      |      |      |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- * |                           |      |      |      |      |      |      |                           |      |
- * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- * |             |      |      |      |      |      |      |      |      |      |      |             |      |
- * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- * |             |  E   |  W   |      |      |      |      |      |      |      |      |      |             |
- * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- * |             |  A   |  S   |  D   |      |      |      |      |      |      |      |      |             |
- * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- * |         F   |      |      |      |      |      |      |      |      |      |      |      |             |
- * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- * |             |                           |      |      |      |                    |      |             |
- * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- *                                                         |                           |      |             |
- *                                                         |------+------+------+------+------+------+------|
-*/
-[GAME] = LAYOUT_k19(
-  ____,  ____,  ____,  ____,  ____,  ____,  ____,       ____,  ____,  ____,  ____,  ____,  ____,  ____,
-  ____,                       ____,  ____,  ____,       ____,  ____,  ____,                       ____,
-  ____,         ____,  ____,  ____,  ____,  ____,       ____,  ____,  ____,  ____,  ____,         ____,
-         ____,  KC_E,  KC_W,  ____,  ____,  ____,       ____,  ____,  ____,  ____,  ____,  ____,
-         ____,  KC_A,  KC_S,  KC_D,  ____,  ____,       ____,  ____,  ____,  ____,  ____,  ____,
-         KC_F,  ____,  ____,  ____,  ____,  ____,       ____,  ____,  ____,  ____,  ____,  ____,
-         ____,                ____,         ____,       ____,  ____,                ____,  ____,
-                                                                             ____,  ____,  ____
-),
 };
 
 /*
@@ -287,7 +256,6 @@ uint32_t layer_state_set_user(uint32_t state) {
   //k19_spch_led_off();
 
   k19_media_led_off();
-  k19_game_led_off();
   k19_num_led_off();
 
   // Check if BASE layer is enabled
@@ -310,11 +278,6 @@ uint32_t layer_state_set_user(uint32_t state) {
   // check if media layer is enabled
   if (state & 8) {
     k19_media_led_on();
-  }
-
-  // check if game layer is enabled
-  if (state & 16) {
-    k19_game_led_on();
   }
 
   return state;

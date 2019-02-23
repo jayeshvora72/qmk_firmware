@@ -33,11 +33,14 @@ void matrix_init_kb(void) {
     // set as input with internal pull-up enabled
     /* Use new GPIO APIs instead of this code
     DDRD  &= ~(1<<4);
+    DDRD  &= ~(1<<5);
     DDRE  &= ~(1<<6);
     PORTD |=  (1<<4);
+    PORTD |=  (1<<5);
     PORTE |=  (1<<6);
     */
     setPinInputHigh(D4);
+    setPinInputHigh(D5);
     setPinInputHigh(E6);
 
     // set GPIO pins as Output for LEDs
@@ -45,8 +48,7 @@ void matrix_init_kb(void) {
     setPinOutput(B5);   // Alt LED
     setPinOutput(D7);   // Shift LED
     setPinOutput(D6);   // SpCh LED
-    setPinOutput(D5);   // Media LED
-    setPinOutput(C7);   // Game LED
+    setPinOutput(C7);   // Media LED
     setPinOutput(C6);   // Num LED
     setPinOutput(B7);   // Caps Lock LED
 
@@ -69,8 +71,6 @@ void k19_blink_all_leds(void)
     _delay_ms(50);
     k19_media_led_on();
     _delay_ms(50);
-    k19_game_led_on();
-    _delay_ms(50);
     k19_num_led_on();
     _delay_ms(50);
     k19_caps_led_on();
@@ -85,8 +85,6 @@ void k19_blink_all_leds(void)
     k19_spch_led_off();
     _delay_ms(50);
     k19_media_led_off();
-    _delay_ms(50);
-    k19_game_led_off();
     _delay_ms(50);
     k19_num_led_off();
     _delay_ms(50);
