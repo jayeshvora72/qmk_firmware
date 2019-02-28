@@ -14,8 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef K19_H
-#define K19_H
+#pragma once
 
 #include "quantum.h"
 #include <stdint.h>
@@ -157,4 +156,4 @@ inline void k19_all_led_set(uint8_t n)
     { L1A, KC_NO, KC_NO, KC_NO, L1E, L1F, R1A, R1B, R1C, R1D, R1E, R1F }, \
     }
 
-#endif
+
