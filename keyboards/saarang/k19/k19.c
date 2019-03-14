@@ -39,18 +39,18 @@ void matrix_init_kb(void) {
     PORTD |=  (1<<5);
     PORTE |=  (1<<6);
     */
+    setPinInputHigh(B4);
     setPinInputHigh(D4);
-    setPinInputHigh(D5);
     setPinInputHigh(E6);
 
     // set GPIO pins as Output for LEDs
-    setPinOutput(B6);   // Ctrl LED
-    setPinOutput(B5);   // Alt LED
+    setPinOutput(B7);   // Ctrl LED
+    setPinOutput(D6);   // Alt LED
     setPinOutput(D7);   // Shift LED
-    setPinOutput(D6);   // SpCh LED
-    setPinOutput(C7);   // Media LED
+    setPinOutput(B5);   // SpCh LED
+    setPinOutput(B6);   // Media LED
     setPinOutput(C6);   // Num LED
-    setPinOutput(B7);   // Caps Lock LED
+    setPinOutput(C7);   // Caps Lock LED
 
     k19_blink_all_leds();
 
