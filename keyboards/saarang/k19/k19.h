@@ -136,7 +136,7 @@ inline void k19_all_led_set(uint8_t n)
         L4A,L4B,L5C,L4D,L4E,L4F,           R4A,R4B,R4C,R5D,R4E,R4F,     \
         L3A,L3B,L4C,L3D,L3E,L3F,           R3A,R3B,R3C,R4D,R3E,R3F,     \
         L2A,L2B,L3C,L2D,L2E,L2F,           R2A,R2B,R2C,R3D,R2E,R2F,     \
-        L1A,        L1E,    L1F,           R1A,    R1B,    R2D,R1F,     \
+        L1A,L1B,        L1E,L1F,           R1A,R1B,        R2D,R1F,     \
                                                        R1C,R1D,R1E)     \
                                                                         \
    /* matrix positions */                   \
@@ -147,7 +147,7 @@ inline void k19_all_led_set(uint8_t n)
     { L4A, L4B, L4C, L4D, L4E, L4F, R4A, R4B, R4C, R4D, R4E, R4F },       \
     { L3A, L3B, L3C, L3D, L3E, L3F, R3A, R3B, R3C, R3D, R3E, R3F },       \
     { L2A, L2B, KC_NO, L2D, L2E, L2F, R2A, R2B, R2C, R2D, R2E, R2F },     \
-    { L1A, KC_NO, KC_NO, KC_NO, L1E, L1F, R1A, R1B, R1C, R1D, R1E, R1F }, \
+    { L1A, L1B, KC_NO, KC_NO, L1E, L1F, R1A, R1B, R1C, R1D, R1E, R1F },   \
     }
 
 

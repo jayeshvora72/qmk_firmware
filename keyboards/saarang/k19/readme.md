@@ -4,9 +4,9 @@
 
 This is an Ergonomic Split Keyboard.
 
-Keyboard Maintainer: [Jayesh Vora](https://github.com/jayeshvora72)  
-Hardware Supported: The keyboard is based on Teensy 2.0 with MCP23018 I/O Expander.  
-Hardware Availability: The keyboard is still under development.  
+Keyboard Maintainer: [Jayesh Vora](https://github.com/jayeshvora72)
+Hardware Supported: The keyboard is based on AtMega32U4 microcontroller with MCP23018 I/O Expander.
+Hardware Availability: The keyboard is still under development.
 
 Make example for this keyboard (after setting up your build environment):
 

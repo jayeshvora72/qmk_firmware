@@ -336,7 +336,7 @@ static void select_row_on_mcp23018(uint8_t row) {
         mcp23018_status = i2c_write(GPIOA, K19_I2C_TIMEOUT);                if (mcp23018_status) goto out;
         mcp23018_status = i2c_write(0xFF & ~(1 << row), K19_I2C_TIMEOUT);   if (mcp23018_status) goto out;
     out:
-        i2c_stop(K19_I2C_TIMEOUT);
+        i2c_stop();
     }
 }
 
@@ -352,7 +352,7 @@ static uint8_t read_cols_on_mcp23018() {
         data = ((uint8_t)mcp23018_status);
         mcp23018_status = I2C_STATUS_SUCCESS;
     out:
-        i2c_stop(K19_I2C_TIMEOUT);
+        i2c_stop();
         return data;
     }
 }
@@ -471,7 +471,7 @@ static void select_col_on_mcp23018(uint8_t col) {
         mcp23018_status = i2c_write(GPIOB, K19_I2C_TIMEOUT);                if (mcp23018_status) goto out;
         mcp23018_status = i2c_write(0xFF & ~(1 << col), K19_I2C_TIMEOUT);   if (mcp23018_status) goto out;
     out:
-        i2c_stop(K19_I2C_TIMEOUT);
+        i2c_stop();
     }
 }
 
@@ -487,7 +487,7 @@ static uint8_t read_rows_on_mcp23018() {
         data = ((uint8_t)mcp23018_status);
         mcp23018_status = I2C_STATUS_SUCCESS;
     out:
-        i2c_stop(K19_I2C_TIMEOUT);
+        i2c_stop();
         return data;
     }
 }

@@ -49,23 +49,21 @@ enum unicode_name {
   SEVEN,
   EIGHT,
   NINE,
+  EURO,
   POUND,
   RUPEE,
-  EURO,
   CURL_BRAC_S,
   CURL_BRAC_E,
-  DOUBLE_QUOTE,
-  PIPE,
-  TILDE,
+  UNDERSCORE,
+  PLUS,
   SQ_BRAC_S,
   SQ_BRAC_E,
-  SINGLE_QUOTE,
-  BACK_SLASH,
-  BACK_TICK,
-  EQUAL,
   MINUS,
-  PLUS,
-  UNDERSCORE
+  EQUAL,
+  TILDE,
+  BACK_SLASH,
+  PIPE,
+  BACK_TICK
 };
 
 const uint32_t PROGMEM unicode_map[] = {
@@ -80,23 +78,21 @@ const uint32_t PROGMEM unicode_map[] = {
   [SEVEN] =         0x37,
   [EIGHT] =         0x38,
   [NINE] =          0x39,
+  [EURO] =          0x20AC,
   [POUND] =         0xA3,
   [RUPEE] =         0x20B9,
-  [EURO] =          0x20AC,
   [CURL_BRAC_S] =   0x7B,
   [CURL_BRAC_E] =   0x7D,
-  [DOUBLE_QUOTE] =  0x22,
-  [PIPE] =          0x7C,
-  [TILDE] =         0x7E,
+  [UNDERSCORE] =    0x5F,
+  [PLUS] =          0x2B,
   [SQ_BRAC_S] =     0x5B,
   [SQ_BRAC_E] =     0x5D,
-  [SINGLE_QUOTE] =  0x27,
-  [BACK_SLASH] =    0x5C,
-  [BACK_TICK] =     0x60,
-  [EQUAL] =         0x3D,
   [MINUS] =         0x2D,
-  [PLUS] =          0x2B,
-  [UNDERSCORE] =    0x5F
+  [EQUAL] =         0x3D,
+  [TILDE] =         0x7E,
+  [BACK_SLASH] =    0x5C,
+  [PIPE] =          0x7C,
+  [BACK_TICK] =     0x60
 };
 
 
@@ -108,15 +104,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
  * | Caps                      | PScr | Paus | PgDn |      | End  |Media | Num                       | Menu |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- * | Shft        |  2   |  3   |  4   |  5   | Esc  |      | Ins  |  6   |  7   |  8   |  9          | Win  |
+ * | Shft        |  2   |  3   |  4   |  5   | Esc  |      | Del  |  6   |  7   |  8   |  9          | Win  |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- * |         1   |  W   |  E   |  R   |  T   | Tab  |      | Del  |  Y   |  U   |  I   |  O   |  0          |
+ * |         1   |  W   |  E   |  R   |  T   | Tab  |      | SpCh |  Y   |  U   |  I   |  O   |  0          |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
  * |         Q   |  S   |  D   |  F   |  G   | Bspc |      | Ent  |  H   |  J   |  K   |  L   |  P          |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- * |         A   |  X   |  C   |  V   |  B   | Alt  |      | SpCh |  N   |  M   |  ,   |  .   |  ;          |
+ * |         A   |  X   |  C   |  V   |  B   | Alt  |      | Ins  |  N   |  M   |  ,   |  .   |  ;          |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- * |         Z   |                  Space    | Ctrl |      | Shft |    Space           |  Up  |  /          |
+ * |         Z   |  '   |           Space    | Ctrl |      | Shft |    Space           |  Up  |  /          |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
  *                                                         |                     Right | Down | Left        |
  *                                                         |------+------+------+------+------+------+------|
@@ -125,11 +121,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [BASE] = LAYOUT_k19(
   KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_PGUP,        KC_HOME,    KC_F7,    KC_F8, KC_F9,   KC_F10, KC_F11, KC_F12,
   KC_CAPS,                KC_PSCR, KC_PAUS, KC_PGDN,        KC_END,     TG(MEDIA),TG(NUMBER),                     KC_APP,
-  OSM(MOD_LSFT),KC_2,  KC_3,  KC_4,  KC_5,  KC_ESC,         KC_INS,     KC_6,     KC_7,  KC_8,    KC_9,           KC_RWIN,
-         KC_1,  KC_W,  KC_E,  KC_R,  KC_T,  KC_TAB,         KC_DEL,     KC_Y,     KC_U,  KC_I,    KC_O,   KC_0,
+  OSM(MOD_LSFT),KC_2,  KC_3,  KC_4,  KC_5,  KC_ESC,         KC_DEL,     KC_6,     KC_7,  KC_8,    KC_9,           KC_RWIN,
+         KC_1,  KC_W,  KC_E,  KC_R,  KC_T,  KC_TAB,         OSL(SPCH),  KC_Y,     KC_U,  KC_I,    KC_O,   KC_0,
          KC_Q,  KC_S,  KC_D,  KC_F,  KC_G,  KC_BSPC,        KC_ENT,     KC_H,     KC_J,  KC_K,    KC_L,   KC_P,
-         KC_A,  KC_X,  KC_C,  KC_V,  KC_B,  OSM(MOD_LALT),  OSL(SPCH),  KC_N,     KC_M,  KC_COMM, KC_DOT, KC_SCLN,
-         KC_Z,                KC_SPC,       OSM(MOD_LCTL),  OSM(MOD_RSFT), KC_SPC,                KC_UP,  KC_SLASH,
+         KC_A,  KC_X,  KC_C,  KC_V,  KC_B,  OSM(MOD_LALT),  KC_INS,     KC_N,     KC_M,  KC_COMM, KC_DOT, KC_SCLN,
+         KC_Z,  KC_QUOT,             KC_SPC,OSM(MOD_LCTL),  OSM(MOD_RSFT),KC_SPC,                 KC_UP,  KC_SLASH,
                                                                                         KC_RIGHT, KC_DOWN,KC_LEFT
 ),
 
@@ -148,7 +144,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
  * |             |      |      |      |      |      |      |      |      |  1   |  2   |  3   |  0          |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- * |             |                           |      |      |      |                    |      |  .          |
+ * |             |      |                    |      |      |      |                    |      |  .          |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
  *                                                         |                           |      |             |
  *                                                         |------+------+------+------+------+------+------|
@@ -161,7 +157,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          ____,  ____,  ____,  ____,  ____,  ____,           ____,  ____,  X(SEVEN), X(EIGHT), X(NINE), KC_PMNS,
          ____,  ____,  ____,  ____,  ____,  ____,           ____,  ____,  X(FOUR), X(FIVE), X(SIX), KC_PPLS,
          ____,  ____,  ____,  ____,  ____,  ____,           ____,  ____,  X(ONE), X(TWO), X(THREE), X(ZERO),
-         ____,                ____,         ____,           ____,  ____,                      ____,     X(DECIMAL_POINT),
+         ____,  ____,                ____,  ____,           ____,  ____,                      ____, X(DECIMAL_POINT),
                                                                                     ____,     ____,     ____
 ),
 /* Keymap 2: Special Characters Layer
@@ -171,13 +167,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
  * |                           |      |      |      |      |      |      |                           |      |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- * |             |      |Pound |Rupee | Euro |      |      |      |      |      |      |             |      |
+ * |             | Euro |Pound |Rupee |      |      |      |      |      |      |      |             |      |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- * |             |  {   |  }   |  "   |  |   |      |      |      |      |      |      |      |             |
+ * |             |  {   |  }   |  _   |      |      |      |      |      |      |      |      |             |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- * |         ~   |  [   |  ]   |  '   |  \   |      |      |      |      |      |      |      |             |
+ * |         +   |  [   |  ]   |  -   |      |      |      |      |      |      |      |      |             |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
- * |         `   |  =   |  -   |  +   |      |      |      |      |      |      |      |      |             |
+ * |         =   |  ~   |  \   |  |   |      |      |      |      |      |      |      |      |             |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
  * |         _   |                           |      |      |      |                    |      |             |
  * |------+------+------+------+------+------+------|      |------+------+------+------+------+------+------|
@@ -185,14 +181,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                                         |------+------+------+------+------+------+------|
  */
 [SPCH] = LAYOUT_k19(
-  ____,  ____,  ____,  ____,  ____,  ____,  ____,                                       ____,  ____,  ____,  ____,  ____,  ____,  ____,
-  ____,                       ____,  ____,  ____,                                       ____,  ____,  ____,                       ____,
-  ____,         ____,         X(POUND),       X(RUPEE),         X(EURO),       ____,    ____,  ____,  ____,  ____,  ____,         ____,
-         ____, X(CURL_BRAC_S), X(CURL_BRAC_E), X(DOUBLE_QUOTE), X(PIPE),       ____,    ____,  ____,  ____,  ____,  ____,  ____,
-     X(TILDE), X(SQ_BRAC_S),  X(SQ_BRAC_E),   X(SINGLE_QUOTE),  X(BACK_SLASH), ____,    ____,  ____,  ____,  ____,  ____,  ____,
-     X(BACK_TICK), X(EQUAL),  X(MINUS),       X(PLUS),          ____,          ____,    ____,  ____,  ____,  ____,  ____,  ____,
-     X(UNDERSCORE),                           ____,                            ____,    ____,  ____,                ____,  ____,
-                                                                                                             ____,  ____,  ____
+  ____,  ____,  ____,  ____,  ____,  ____,  ____,                          ____,  ____,  ____,  ____,  ____,  ____,  ____,
+  ____,                       ____,  ____,  ____,                          ____,  ____,  ____,                       ____,
+  ____,        X(EURO),       X(POUND),      X(RUPEE),      ____, ____,    ____,  ____,  ____,  ____,  ____,         ____,
+         ____, X(CURL_BRAC_S),X(CURL_BRAC_E),X(UNDERSCORE), ____, ____,    ____,  ____,  ____,  ____,  ____,  ____,
+     X(PLUS),  X(SQ_BRAC_S),  X(SQ_BRAC_E),  X(MINUS),      ____, ____,    ____,  ____,  ____,  ____,  ____,  ____,
+     X(EQUAL), X(TILDE),      X(BACK_SLASH), X(PIPE),       ____, ____,    ____,  ____,  ____,  ____,  ____,  ____,
+     X(BACK_TICK), ____,                                    ____, ____,    ____,  ____,                ____,  ____,
+                                                                                                ____,  ____,  ____
 ),
 /* Keymap 3: Media Layer
  *
@@ -221,7 +217,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          ____,  ____,  ____,  ____,  ____,  ____,                   ____,  ____,  ____,  ____,  ____,  ____,
          ____,  ____,  ____,  ____,  ____,  ____,                   ____,  ____,  ____,  ____,  ____,  ____,
          ____,  ____,  ____,  ____,  ____,  ____,                   ____,  ____,  ____,  ____,  ____,  ____,
-         ____,                ____,         ____,                   ____,  ____,                ____,  ____,
+         ____,  ____,                ____,  ____,                   ____,  ____,                ____,  ____,
                                                                                          ____,  ____,  ____
 ),
 };

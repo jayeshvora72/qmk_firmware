@@ -123,7 +123,7 @@ uint8_t init_mcp23018(void) {
     // 6 columns set for input in IODIRB.
     // Address is automatically incremented to IODIRB.
     mcp23018_status = i2c_write(0b00111111, K19_I2C_TIMEOUT);        if (mcp23018_status) goto out;
-    i2c_stop(K19_I2C_TIMEOUT);
+    i2c_stop();
 
     // set pull-up
     // - unused  : on  : 1
@@ -138,7 +138,7 @@ uint8_t init_mcp23018(void) {
     mcp23018_status = i2c_write(0b00111111, K19_I2C_TIMEOUT);        if (mcp23018_status) goto out;
 
 out:
-    i2c_stop(K19_I2C_TIMEOUT);
+    i2c_stop();
 
 #elif (DIODE_DIRECTION == ROW2COL)
 
@@ -153,7 +153,7 @@ out:
     // 6 columns set for output in IODIRB.
     // Address is automatically incremented to IODIRB.
     mcp23018_status = i2c_write(0b00000000, K19_I2C_TIMEOUT);        if (mcp23018_status) goto out;
-    i2c_stop(K19_I2C_TIMEOUT);
+    i2c_stop();
 
     // set pull-up
     // - unused  : on  : 1
