@@ -41,7 +41,15 @@
  *                  ROW2COL = ROW = Anode (+), COL = Cathode (-, marked on diode)
  *
 */
-#define MATRIX_ROW_PINS { B0, B1, B2, B3, D2, D3, D5 }
+
+/*
+ * In the PCB design the rows are numbered as one to seven moving from bottom to top,
+ * however, the QMK software starts numbering of the rows from top to bottom, that
+ * means for QMK the top most row is row-one and the bottom most row is row-seven.
+ * Keeing this in mind, the ordering of rows has been reversed in MATRIX_ROW_PINS
+ * as compared to the circuit schematic.
+ */
+#define MATRIX_ROW_PINS { D5, D3, D2, B3, B2, B1, B0 }
 #define MATRIX_COL_PINS { F0, F1, F4, F5, F6, F7 }
 #define UNUSED_PINS     { B4, D4, E6 }
 

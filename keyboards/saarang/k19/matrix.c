@@ -330,6 +330,15 @@ static void select_row_on_mcp23018(uint8_t row) {
     if (mcp23018_status) { // if there was an error
         // do nothing
     } else {
+
+        /*
+         * In the PCB design the rows are numbered as one to seven moving from bottom to top,
+         * however, the QMK software starts numbering of the rows from top to bottom, that
+         * means for QMK the top most row is row-one and the bottom most row is row-seven.
+         * Keeing this in mind, the ordering of rows has been reversed here.
+         */
+        row = 6 - row;
+
         // set active row low  : 0
         // set other rows hi-Z : 1
         mcp23018_status = i2c_start(I2C_ADDR_WRITE, K19_I2C_TIMEOUT);       if (mcp23018_status) goto out;
