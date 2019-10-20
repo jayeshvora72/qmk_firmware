@@ -131,23 +131,23 @@ inline void k19_all_led_set(uint8_t n)
 /*  ---------- LEFT HAND -----------   ---------- RIGHT HAND ---------- */
 #define LAYOUT_k19(                                                     \
     LA7,LB7,LC6,LC7,LD7,LE7,LF7,           RA7,RB7,RC7,RD7,RD6,RE7,RF7, \
-    LA6,            LD6,LE6,LF6,           RA6,RB6,RC6,        RE6,RF6, \
+    LA6,            LD6,LE6,LF6,           RA6,RB6,RC6,            RF6, \
         LA5,LB5,LC5,LD5,LE5,LF5,           RA5,RB5,RC5,RD5,RE5,RF5,     \
         LA4,LB4,LC4,LD4,LE4,LF4,           RA4,RB4,RC4,RD4,RE4,RF4,     \
         LA3,LB3,LC3,LD3,LE3,LF3,           RA3,RB3,RC3,RD3,RE3,RF3,     \
         LA2,LB2,LC2,LD2,LE2,LF2,           RA2,RB2,RC2,RD2,RE2,RF2,     \
-            LB1,    LD1,LE1,LF1,           RA1,RB1,        RD1,         \
+        LA1,LB1,    LD1,LE1,LF1,           RA1,RB1,        RD1,         \
                                                        RC1,RE1,RF1)     \
                                                                         \
    /* matrix positions */                   \
     {                                       \
-    { LA7,   LB7,   LC7,   LD7, LE7, LF7,       RA7, RB7, RC7, RD7, RE7, RF7 },       \
-    { LA6,   KC_NO, LC6,   LD6, LE6, LF6,       RA6, RB6, RC6, RD6, RE6, RF6 },       \
-    { LA5,   LB5,   LC5,   LD5, LE5, LF5,       RA5, RB5, RC5, RD5, RE5, RF5 },       \
-    { LA4,   LB4,   LC4,   LD4, LE4, LF4,       RA4, RB4, RC4, RD4, RE4, RF4 },       \
-    { LA3,   LB3,   LC3,   LD3, LE3, LF3,       RA3, RB3, RC3, RD3, RE3, RF3 },       \
-    { LA2,   LB2,   LC2,   LD2, LE2, LF2,       RA2, RB2, RC2, RD2, RE2, RF2 },       \
-    { KC_NO, LB1,   KC_NO, LD1, LE1, LF1,       RA1, RB1, RC1, RD1, RE1, RF1 },       \
+    { LA7, LB7,   LC7,   LD7, LE7, LF7,       RA7, RB7, RC7, RD7, RE7,   RF7 },       \
+    { LA6, KC_NO, LC6,   LD6, LE6, LF6,       RA6, RB6, RC6, RD6, KC_NO, RF6 },       \
+    { LA5, LB5,   LC5,   LD5, LE5, LF5,       RA5, RB5, RC5, RD5, RE5,   RF5 },       \
+    { LA4, LB4,   LC4,   LD4, LE4, LF4,       RA4, RB4, RC4, RD4, RE4,   RF4 },       \
+    { LA3, LB3,   LC3,   LD3, LE3, LF3,       RA3, RB3, RC3, RD3, RE3,   RF3 },       \
+    { LA2, LB2,   LC2,   LD2, LE2, LF2,       RA2, RB2, RC2, RD2, RE2,   RF2 },       \
+    { LA1, LB1,   KC_NO, LD1, LE1, LF1,       RA1, RB1, RC1, RD1, RE1,   RF1 },       \
     }
 
 
