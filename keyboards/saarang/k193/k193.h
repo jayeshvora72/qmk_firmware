@@ -44,6 +44,9 @@
 extern i2c_status_t mcp23018_status;            // status of MCP23018 on Right Keypad
 extern i2c_status_t mcp23018_status_number_keypad; // status of MCP23018 on Number Keypad
 
+extern bool is_right_keypad_present;
+extern bool is_number_keypad_present;
+
 #define K19_I2C_TIMEOUT 100
 
 // TO DO

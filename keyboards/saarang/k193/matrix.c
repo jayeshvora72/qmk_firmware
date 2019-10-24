@@ -294,11 +294,13 @@ static bool read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
     // Select row and wait for row selecton to stabilize
     select_row(current_row);
 
-    // Select Row on MCP23018
-    select_row_on_mcp23018(current_row);
+    if (is_right_keypad_present) {
+        select_row_on_mcp23018(current_row);
+    }
 
-    // Select Row on MCP23018
-    select_row_on_mcp23018_number_keypad(current_row);
+    if (is_number_keypad_present) {
+        select_row_on_mcp23018_number_keypad(current_row);
+    }
 
     // we don't need a 30us delay anymore, because selecting a
     // row on mcp23018 requires more than 30us for i2c.
@@ -317,28 +319,31 @@ static bool read_cols_on_row(matrix_row_t current_matrix[], uint8_t current_row)
     // Unselect row
     unselect_row(current_row);
 
-    uint8_t data = read_cols_on_mcp23018();
+    if (is_right_keypad_present) {
+        uint8_t data = read_cols_on_mcp23018();
 
-    // For each col...
-    for(uint8_t col_index = 0; col_index < MATRIX_COLS_RIGHT_KEYPAD; col_index++) {
+        // For each col...
+        for(uint8_t col_index = 0; col_index < MATRIX_COLS_RIGHT_KEYPAD; col_index++) {
 
-        uint8_t pin_state = data & ((uint8_t)1 << col_index);
+            uint8_t pin_state = data & ((uint8_t)1 << col_index);
 
-        // Populate the matrix row with the state of the col pin
-        current_matrix[current_row] |=  pin_state ? 0 : (ROW_SHIFTER << (col_index + MATRIX_COLS_LEFT_KEYPAD));
+            // Populate the matrix row with the state of the col pin
+            current_matrix[current_row] |=  pin_state ? 0 : (ROW_SHIFTER << (col_index + MATRIX_COLS_LEFT_KEYPAD));
+        }
     }
 
-    uint8_t data_number_keypad = read_cols_on_mcp23018_number_keypad();
+    if (is_number_keypad_present) {
+        uint8_t data_number_keypad = read_cols_on_mcp23018_number_keypad();
 
-    // For each col...
-    for(uint8_t col_index = 0; col_index < MATRIX_COLS_NUMBER_KEYPAD; col_index++) {
+        // For each col...
+        for(uint8_t col_index = 0; col_index < MATRIX_COLS_NUMBER_KEYPAD; col_index++) {
 
-        uint8_t pin_state = data_number_keypad & ((uint8_t)1 << col_index);
+            uint8_t pin_state = data_number_keypad & ((uint8_t)1 << col_index);
 
-        // Populate the matrix row with the state of the col pin
-        current_matrix[current_row] |=  pin_state ? 0 : (ROW_SHIFTER << (col_index + MATRIX_COLS_LEFT_KEYPAD + MATRIX_COLS_RIGHT_KEYPAD));
+            // Populate the matrix row with the state of the col pin
+            current_matrix[current_row] |=  pin_state ? 0 : (ROW_SHIFTER << (col_index + MATRIX_COLS_LEFT_KEYPAD + MATRIX_COLS_RIGHT_KEYPAD));
+        }
     }
-
 
     return (last_row_value != current_matrix[current_row]);
 }
@@ -362,10 +367,7 @@ static void unselect_rows(void)
 }
 
 static void select_row_on_mcp23018(uint8_t row) {
-    if (mcp23018_status) { // if there was an error
-        // do nothing
-    } else {
-
+    if (!mcp23018_status) {
         /*
          * In the PCB design the rows are numbered as one to seven moving from bottom to top,
          * however, the QMK software starts numbering of the rows from top to bottom, that
@@ -390,10 +392,7 @@ static void select_row_on_mcp23018_number_keypad(uint8_t row) {
         return;
     }
 
-    if (mcp23018_status_number_keypad) { // if there was an error
-        // do nothing
-    } else {
-
+    if (!mcp23018_status_number_keypad) {
         /*
          * In the PCB design the rows are numbered as one to seven moving from bottom to top,
          * however, the QMK software starts numbering of the rows from top to bottom, that
@@ -462,72 +461,128 @@ static bool read_rows_on_col(matrix_row_t current_matrix[], uint8_t current_col)
 {
     bool matrix_changed = false;
 
-    // Select col and wait for col selecton to stabilize
-    select_col(current_col);
+    if (current_col < MATRIX_COLS_LEFT_KEYPAD) {
+        // Select col and wait for col selecton to stabilize
+        select_col(current_col);
 
-    // Select Column on MCP23018
-    select_col_on_mcp23018(current_col);
-
-    // we don't need a 30us delay anymore, because selecting a
-    // column on mcp23018 requires more than 30us for i2c.
-    // wait_us(30);
-
-    // For each row...
-    for(uint8_t row_index = 0; row_index < MATRIX_ROWS; row_index++)
-    {
-        // Store last value of row prior to reading
-        matrix_row_t last_row_value = current_matrix[row_index];
-
-        // Check row pin state
-        if (readPin(row_pins[row_index]) == 0)
+        // For each row...
+        for(uint8_t row_index = 0; row_index < MATRIX_ROWS; row_index++)
         {
-            // Pin LO, set col bit
-            current_matrix[row_index] |= (ROW_SHIFTER << current_col);
-        }
-        else
-        {
-            // Pin HI, clear col bit
-            current_matrix[row_index] &= ~(ROW_SHIFTER << current_col);
+            // Store last value of row prior to reading
+            matrix_row_t last_row_value = current_matrix[row_index];
+
+            // Check row pin state
+            if (readPin(row_pins[row_index]) == 0)
+            {
+                // Pin LO, set col bit
+                current_matrix[row_index] |= (ROW_SHIFTER << current_col);
+            }
+            else
+            {
+                // Pin HI, clear col bit
+                current_matrix[row_index] &= ~(ROW_SHIFTER << current_col);
+            }
+
+            // Determine if the matrix changed state
+            if ((last_row_value != current_matrix[row_index]) && !(matrix_changed))
+            {
+                matrix_changed = true;
+            }
         }
 
-        // Determine if the matrix changed state
-        if ((last_row_value != current_matrix[row_index]) && !(matrix_changed))
-        {
-            matrix_changed = true;
-        }
+        // Unselect col
+        unselect_col(current_col);
+
     }
 
-    // Unselect col
-    unselect_col(current_col);
+    if (is_right_keypad_present && current_col >= MATRIX_COLS_LEFT_KEYPAD && current_col < (MATRIX_COLS_LEFT_KEYPAD + MATRIX_COLS_RIGHT_KEYPAD)) {
+        select_col_on_mcp23018(current_col);
 
-    uint8_t data = read_rows_on_mcp23018();
+        // we don't need a 30us delay anymore, because selecting a
+        // column on mcp23018 requires more than 30us for i2c.
+        // wait_us(30);
 
-    for(uint8_t row_index = 0; row_index < MATRIX_ROWS; row_index++)
-    {
-        // Store last value of row prior to reading
-        matrix_row_t last_row_value = current_matrix[row_index];
+        uint8_t data = read_rows_on_mcp23018();
 
-        if ((data & ((uint8_t)1 << row_index)) == 0)
+        for(uint8_t row_index = 0; row_index < MATRIX_ROWS; row_index++)
         {
-            // Pin LO, set col bit
-            current_matrix[row_index] |= (ROW_SHIFTER << (current_col + MATRIX_COLS_LEFT_KEYPAD));
-        }
-        else
-        {
-            // Pin HI, clear col bit
-            current_matrix[row_index] &= ~(ROW_SHIFTER << (current_col + MATRIX_COLS_LEFT_KEYPAD));
-        }
+            /*
+            * In the PCB design the rows are numbered as one to seven moving from bottom to top,
+            * however, the QMK software starts numbering of the rows from top to bottom, that
+            * means for QMK the top most row is row-one and the bottom most row is row-seven.
+            * Keeping this in mind, the ordering of rows has been reversed here.
+            */
+            row_index = 6 - row_index;
 
-        // Determine if the matrix changed state
-        if ((last_row_value != current_matrix[row_index]) && !(matrix_changed))
-        {
-            matrix_changed = true;
+            // Store last value of row prior to reading
+            matrix_row_t last_row_value = current_matrix[row_index];
+
+            if ((data & ((uint8_t)1 << row_index)) == 0)
+            {
+                // Pin LO, set col bit
+                current_matrix[row_index] |= (ROW_SHIFTER << (current_col + MATRIX_COLS_LEFT_KEYPAD));
+            }
+            else
+            {
+                // Pin HI, clear col bit
+                current_matrix[row_index] &= ~(ROW_SHIFTER << (current_col + MATRIX_COLS_LEFT_KEYPAD));
+            }
+
+            // Determine if the matrix changed state
+            if ((last_row_value != current_matrix[row_index]) && !(matrix_changed))
+            {
+                matrix_changed = true;
+            }
         }
+        // no need to unselect col on mcp23018, because the select step sets all
+        // the other row bits high, and it's not changing to a different
+        // direction
     }
 
-    // no need to unselect col on mcp23018, because the select step sets all
-    // the other row bits high, and it's not changing to a different
-    // direction
+    if (is_number_keypad_present && current_col >= (MATRIX_COLS_LEFT_KEYPAD + MATRIX_COLS_RIGHT_KEYPAD)) {
+        select_col_on_mcp23018_number_keypad(current_col);
+
+        // we don't need a 30us delay anymore, because selecting a
+        // column on mcp23018 requires more than 30us for i2c.
+        // wait_us(30);
+
+        uint8_t data_number_keypad = read_rows_on_mcp23018_number_keypad();
+
+        // starting from row index value 2, as rows 0 and 1 do not exist in case of number keypad
+        for(uint8_t row_index = 2; row_index < MATRIX_ROWS; row_index++)
+        {
+            /*
+            * In the PCB design the rows are numbered as one to seven moving from bottom to top,
+            * however, the QMK software starts numbering of the rows from top to bottom, that
+            * means for QMK the top most row is row-one and the bottom most row is row-seven.
+            * Keeping this in mind, the ordering of rows has been reversed here.
+            */
+            row_index = 6 - row_index;
+
+            // Store last value of row prior to reading
+            matrix_row_t last_row_value = current_matrix[row_index];
+
+            if ((data_number_keypad & ((uint8_t)1 << row_index)) == 0)
+            {
+                // Pin LO, set col bit
+                current_matrix[row_index] |= (ROW_SHIFTER << (current_col + MATRIX_COLS_LEFT_KEYPAD));
+            }
+            else
+            {
+                // Pin HI, clear col bit
+                current_matrix[row_index] &= ~(ROW_SHIFTER << (current_col + MATRIX_COLS_LEFT_KEYPAD));
+            }
+
+            // Determine if the matrix changed state
+            if ((last_row_value != current_matrix[row_index]) && !(matrix_changed))
+            {
+                matrix_changed = true;
+            }
+        }
+        // no need to unselect col on mcp23018, because the select step sets all
+        // the other row bits high, and it's not changing to a different
+        // direction
+    }
 
     return matrix_changed;
 }
@@ -564,6 +619,21 @@ static void select_col_on_mcp23018(uint8_t col) {
     }
 }
 
+static void select_col_on_mcp23018_number_keypad(uint8_t col) {
+    if (mcp23018_status_number_keypad) { // if there was an error
+        // do nothing
+    } else {
+        // set active col low  : 0
+        // set other cols hi-Z : 1
+        mcp23018_status_number_keypad = i2c_start(I2C_ADDR_NUMBER_KEYPAD_WRITE, K19_I2C_TIMEOUT);       if (mcp23018_status_number_keypad) goto out;
+        mcp23018_status_number_keypad = i2c_write(GPIOB, K19_I2C_TIMEOUT);                if (mcp23018_status_number_keypad) goto out;
+        mcp23018_status_number_keypad = i2c_write(0xFF & ~(1 << col), K19_I2C_TIMEOUT);   if (mcp23018_status_number_keypad) goto out;
+    out:
+        i2c_stop();
+    }
+}
+
+
 static uint8_t read_rows_on_mcp23018() {
     if (mcp23018_status) { // if there was an error
         return 0;
@@ -575,6 +645,23 @@ static uint8_t read_rows_on_mcp23018() {
         mcp23018_status = i2c_read_nack(K19_I2C_TIMEOUT);                if (mcp23018_status < 0) goto out;
         data = ((uint8_t)mcp23018_status);
         mcp23018_status = I2C_STATUS_SUCCESS;
+    out:
+        i2c_stop();
+        return data;
+    }
+}
+
+static uint8_t read_rows_on_mcp23018_number_keypad() {
+    if (mcp23018_status_number_keypad) { // if there was an error
+        return 0;
+    } else {
+        uint8_t data = 0;
+        mcp23018_status_number_keypad = i2c_start(I2C_ADDR_WRITE, K19_I2C_TIMEOUT);    if (mcp23018_status_number_keypad) goto out;
+        mcp23018_status_number_keypad = i2c_write(GPIOA, K19_I2C_TIMEOUT);             if (mcp23018_status_number_keypad) goto out;
+        mcp23018_status_number_keypad = i2c_start(I2C_ADDR_READ, K19_I2C_TIMEOUT);     if (mcp23018_status_number_keypad) goto out;
+        mcp23018_status_number_keypad = i2c_read_nack(K19_I2C_TIMEOUT);                if (mcp23018_status_number_keypad < 0) goto out;
+        data = ((uint8_t)mcp23018_status_number_keypad);
+        mcp23018_status_number_keypad = I2C_STATUS_SUCCESS;
     out:
         i2c_stop();
         return data;

@@ -21,6 +21,9 @@ bool i2c_initialized = 0;
 i2c_status_t mcp23018_status = 0x20;
 i2c_status_t mcp23018_status_number_keypad = 0x20;
 
+bool is_right_keypad_present = true;
+bool is_number_keypad_present = true;
+
 void matrix_init_kb(void) {
 
 
@@ -120,7 +123,16 @@ uint8_t init_mcp23018(void) {
     // - unused  : input  : 1
     // - input   : input  : 1
     // - driving : output : 0
-    mcp23018_status = i2c_start(I2C_ADDR_WRITE, K19_I2C_TIMEOUT);    if (mcp23018_status) goto out;
+    mcp23018_status = i2c_start(I2C_ADDR_WRITE, K19_I2C_TIMEOUT);
+    // If there is an error receiving an Actknowlegement, we assume that there is no I2C device at the other
+    // end.
+    if (mcp23018_status == I2C_STATUS_ACK_ERROR) {
+        is_right_keypad_present = false;
+        goto out;
+    }
+    if (mcp23018_status) {
+        goto out;
+    }
     mcp23018_status = i2c_write(IODIRA, K19_I2C_TIMEOUT);            if (mcp23018_status) goto out;
     // 7 rows set for output in IODIRA
     mcp23018_status = i2c_write(0b00000000, K19_I2C_TIMEOUT);        if (mcp23018_status) goto out;
@@ -151,7 +163,14 @@ uint8_t init_mcp23018(void) {
     // - unused  : input  : 1
     // - input   : input  : 1
     // - driving : output : 0
-    mcp23018_status = i2c_start(I2C_ADDR_WRITE, K19_I2C_TIMEOUT);    if (mcp23018_status) goto out;
+    mcp23018_status = i2c_start(I2C_ADDR_WRITE, K19_I2C_TIMEOUT);
+    if (mcp23018_status == I2C_STATUS_ACK_ERROR) {
+        is_right_keypad_present = false;
+        goto out;
+    }
+    if (mcp23018_status) {
+        goto out;
+    }
     mcp23018_status = i2c_write(IODIRA, K19_I2C_TIMEOUT);            if (mcp23018_status) goto out;
     // 7 rows set for input in IODIRA
     mcp23018_status = i2c_write(0b01111111, K19_I2C_TIMEOUT);        if (mcp23018_status) goto out;
@@ -202,7 +221,15 @@ uint8_t init_mcp23018_number_keypad(void) {
     // Initialization of MCP23018 on Number Keypad
 
     mcp23018_status_number_keypad = i2c_start(I2C_ADDR_NUMBER_KEYPAD_WRITE, K19_I2C_TIMEOUT);
-    if (mcp23018_status_number_keypad) goto out;
+    // If there is an error receiving an Actknowlegement, we assume that there is no I2C device at the other
+    // end.
+    if (mcp23018_status_number_keypad == I2C_STATUS_ACK_ERROR) {
+        is_number_keypad_present = false;
+        goto out;
+    }
+    if (mcp23018_status_number_keypad) {
+        goto out;
+    }
     mcp23018_status_number_keypad = i2c_write(IODIRA, K19_I2C_TIMEOUT);
     if (mcp23018_status_number_keypad) goto out;
     // 5 rows set for output in IODIRA
@@ -233,7 +260,13 @@ uint8_t init_mcp23018_number_keypad(void) {
     // Initialization of MCP23018 on Number Keypad
 
     mcp23018_status_number_keypad = i2c_start(I2C_ADDR_WRITE, K19_I2C_TIMEOUT);
-    if (mcp23018_status_number_keypad) goto out;
+    if (mcp23018_status_number_keypad == I2C_STATUS_ACK_ERROR) {
+        is_number_keypad_present = false;
+        goto out;
+    }
+    if (mcp23018_status_number_keypad) {
+        goto out;
+    }
     mcp23018_status_number_keypad = i2c_write(IODIRA, K19_I2C_TIMEOUT);
     if (mcp23018_status_number_keypad) goto out;
     // 5 rows set for input in IODIRA

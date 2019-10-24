@@ -16,6 +16,7 @@
 
 # # project specific files
 SRC += matrix.c
+SRC += i2c_master.c
 
 # MCU name
 MCU = atmega32u4
@@ -88,9 +89,9 @@ API_SYSEX_ENABLE = no
 RGBLIGHT_ENABLE  = no
 RGB_MATRIX_ENABLE = no # enable later
 
-ifeq ($(strip $(RGB_MATRIX_ENABLE)), no)
-  SRC += i2c_master.c
-endif
+#ifeq ($(strip $(RGB_MATRIX_ENABLE)), no)
+#  SRC += i2c_master.c
+#endif
 
 
 LAYOUTS = ergodox
