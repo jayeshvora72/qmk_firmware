@@ -368,14 +368,6 @@ static void unselect_rows(void)
 
 static void select_row_on_mcp23018(uint8_t row) {
     if (!mcp23018_status) {
-        /*
-         * In the PCB design the rows are numbered as one to seven moving from bottom to top,
-         * however, the QMK software starts numbering of the rows from top to bottom, that
-         * means for QMK the top most row is row-one and the bottom most row is row-seven.
-         * Keeping this in mind, the ordering of rows has been reversed here.
-         */
-        row = 6 - row;
-
         // set active row low  : 0
         // set other rows hi-Z : 1
         mcp23018_status = i2c_start(I2C_ADDR_WRITE, K19_I2C_TIMEOUT);       if (mcp23018_status) goto out;
@@ -393,14 +385,6 @@ static void select_row_on_mcp23018_number_keypad(uint8_t row) {
     }
 
     if (!mcp23018_status_number_keypad) {
-        /*
-         * In the PCB design the rows are numbered as one to seven moving from bottom to top,
-         * however, the QMK software starts numbering of the rows from top to bottom, that
-         * means for QMK the top most row is row-one and the bottom most row is row-seven.
-         * Keeping this in mind, the ordering of rows has been reversed here.
-         */
-        row = 6 - row;
-
         // set active row low  : 0
         // set other rows hi-Z : 1
         mcp23018_status_number_keypad = i2c_start(I2C_ADDR_NUMBER_KEYPAD_WRITE, K19_I2C_TIMEOUT);       if (mcp23018_status_number_keypad) goto out;
@@ -506,14 +490,6 @@ static bool read_rows_on_col(matrix_row_t current_matrix[], uint8_t current_col)
 
         for(uint8_t row_index = 0; row_index < MATRIX_ROWS; row_index++)
         {
-            /*
-            * In the PCB design the rows are numbered as one to seven moving from bottom to top,
-            * however, the QMK software starts numbering of the rows from top to bottom, that
-            * means for QMK the top most row is row-one and the bottom most row is row-seven.
-            * Keeping this in mind, the ordering of rows has been reversed here.
-            */
-            row_index = 6 - row_index;
-
             // Store last value of row prior to reading
             matrix_row_t last_row_value = current_matrix[row_index];
 
@@ -551,14 +527,6 @@ static bool read_rows_on_col(matrix_row_t current_matrix[], uint8_t current_col)
         // starting from row index value 2, as rows 0 and 1 do not exist in case of number keypad
         for(uint8_t row_index = 2; row_index < MATRIX_ROWS; row_index++)
         {
-            /*
-            * In the PCB design the rows are numbered as one to seven moving from bottom to top,
-            * however, the QMK software starts numbering of the rows from top to bottom, that
-            * means for QMK the top most row is row-one and the bottom most row is row-seven.
-            * Keeping this in mind, the ordering of rows has been reversed here.
-            */
-            row_index = 6 - row_index;
-
             // Store last value of row prior to reading
             matrix_row_t last_row_value = current_matrix[row_index];
 
