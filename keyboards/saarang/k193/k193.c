@@ -52,7 +52,7 @@ void matrix_init_kb(void) {
     setPinOutput(B7);   // Ctrl LED
     setPinOutput(D6);   // Alt LED
     setPinOutput(D7);   // Shift LED
-    setPinOutput(B5);   // SpCh LED
+    setPinOutput(B5);   // Symbol LED
     setPinOutput(B6);   // Media LED
     setPinOutput(C6);   // Num LED
     setPinOutput(C7);   // Caps Lock LED
@@ -72,7 +72,7 @@ void k19_blink_all_leds(void)
     _delay_ms(50);
     k19_shift_led_on();
     _delay_ms(50);
-    k19_spch_led_on();
+    k19_symbol_led_on();
     _delay_ms(50);
     k19_media_led_on();
     _delay_ms(50);
@@ -87,7 +87,7 @@ void k19_blink_all_leds(void)
     _delay_ms(50);
     k19_shift_led_off();
     _delay_ms(50);
-    k19_spch_led_off();
+    k19_symbol_led_off();
     _delay_ms(50);
     k19_media_led_off();
     _delay_ms(50);
