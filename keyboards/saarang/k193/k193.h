@@ -158,5 +158,5 @@ inline void k19_all_led_set(uint8_t n)
     { LA4, LB4, LC4, LD4, LE4, LF4,         RA4, RB4, RC4, RD4, RE4, RF4,           NA4, NB4, NC4, ND4 },   \
     { LA5, LB5, LC5, LD5, LE5, LF5,         RA5, RB5, RC5, RD5, RE5, RF5,           NA5, NB5, NC5, ND5 },   \
     { LA6, LB6, LC6, LD6, LE6, LF6,         RA6, RB6, RC6, RD6, RE6, RF6,           NA6, NB6, NC6, ND6 },   \
-    { LA7, LB7, LC6, LD7, LE7, LF7,         RA7, RB7, RC7, RD7, RE7, RF7,           NA7, KC_NO, NC7, KC_NO},\
+    { LA7, LB7, LC7, LD7, LE7, LF7,         RA7, RB7, RC7, RD7, RE7, RF7,           NA7, KC_NO, NC7, KC_NO},\
     }

@@ -384,6 +384,14 @@ static void select_row_on_mcp23018_number_keypad(uint8_t row) {
         return;
     }
 
+    // The way the circuit is connected, we have GPA0 of MCP23018 on Number keypad representing R3,
+    // GPA1 -> R4
+    // GPA2 -> R5
+    // GPA3 -> R6 and
+    // GPA4 -> R7
+    // For this reason, we need to subtract 2 from row value here.
+    row = row - 2;
+
     if (!mcp23018_status_number_keypad) {
         // set active row low  : 0
         // set other rows hi-Z : 1
