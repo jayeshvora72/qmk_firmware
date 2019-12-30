@@ -27,7 +27,7 @@
 #define DESCRIPTION     Ergonomic Split Keyboard with three keypads
 
 /* key matrix size */
-#define MATRIX_ROWS 7
+#define MATRIX_ROWS 8
 #define MATRIX_ROWS_NUMBER_KEYPAD 5
 
 #define MATRIX_COLS 16

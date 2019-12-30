@@ -34,28 +34,25 @@ void matrix_init_kb(void) {
     TCCR1B = 0b00001001;  // set and configure fast PWM
     */
 
-    // unused pins - B4, D4, E6
+    // unused pins - B4, E6
     // set as input with internal pull-up enabled
     /* Use new GPIO APIs instead of this code
     DDRB  &= ~(1<<4);
-    DDRD  &= ~(1<<4);
     DDRE  &= ~(1<<6);
     PORTB |=  (1<<4);
-    PORTD |=  (1<<4);
     PORTE |=  (1<<6);
     */
     setPinInputHigh(B4);
-    setPinInputHigh(D4);
     setPinInputHigh(E6);
 
     // set GPIO pins as Output for LEDs
-    setPinOutput(B7);   // Ctrl LED
-    setPinOutput(D6);   // Alt LED
-    setPinOutput(D7);   // Shift LED
-    setPinOutput(B5);   // Symbol LED
-    setPinOutput(B6);   // Media LED
+    setPinOutput(B7);   // Shift LED
+    setPinOutput(D6);   // Ctrl LED
+    setPinOutput(D7);   // Alt LED
+    setPinOutput(B5);   // Media LED
+    setPinOutput(B6);   // Caps Lock LED
     setPinOutput(C6);   // Num LED
-    setPinOutput(C7);   // Caps Lock LED
+    setPinOutput(C7);   // Dvorak LED
 
     k19_blink_all_leds();
 
@@ -66,34 +63,34 @@ void k19_blink_all_leds(void)
 {
     k19_all_led_off();
     //k19_all_led_set(LED_BRIGHTNESS_DEFAULT);
+    k19_shift_led_on();
+    _delay_ms(50);
     k19_ctrl_led_on();
     _delay_ms(50);
     k19_alt_led_on();
     _delay_ms(50);
-    k19_shift_led_on();
-    _delay_ms(50);
-    k19_symbol_led_on();
-    _delay_ms(50);
     k19_media_led_on();
-    _delay_ms(50);
-    k19_num_led_on();
     _delay_ms(50);
     k19_caps_led_on();
     _delay_ms(50);
+    k19_num_led_on();
+    _delay_ms(50);
+    k19_dvorak_led_on();
+    _delay_ms(50);
 
+    k19_shift_led_off();
+    _delay_ms(50);
     k19_ctrl_led_off();
     _delay_ms(50);
     k19_alt_led_off();
     _delay_ms(50);
-    k19_shift_led_off();
-    _delay_ms(50);
-    k19_symbol_led_off();
-    _delay_ms(50);
     k19_media_led_off();
+    _delay_ms(50);
+    k19_caps_led_off();
     _delay_ms(50);
     k19_num_led_off();
     _delay_ms(50);
-    k19_caps_led_off();
+    k19_dvorak_led_off();
     _delay_ms(50);
 }
 
@@ -134,7 +131,7 @@ uint8_t init_mcp23018(void) {
         goto out;
     }
     mcp23018_status = i2c_write(IODIRA, K19_I2C_TIMEOUT);            if (mcp23018_status) goto out;
-    // 7 rows set for output in IODIRA
+    // 8 rows set for output in IODIRA
     mcp23018_status = i2c_write(0b00000000, K19_I2C_TIMEOUT);        if (mcp23018_status) goto out;
     // 6 columns set for input in IODIRB.
     // Address is automatically incremented to IODIRB.
@@ -172,8 +169,8 @@ uint8_t init_mcp23018(void) {
         goto out;
     }
     mcp23018_status = i2c_write(IODIRA, K19_I2C_TIMEOUT);            if (mcp23018_status) goto out;
-    // 7 rows set for input in IODIRA
-    mcp23018_status = i2c_write(0b01111111, K19_I2C_TIMEOUT);        if (mcp23018_status) goto out;
+    // 8 rows set for input in IODIRA
+    mcp23018_status = i2c_write(0b11111111, K19_I2C_TIMEOUT);        if (mcp23018_status) goto out;
     // 6 columns set for output in IODIRB.
     // Address is automatically incremented to IODIRB.
     mcp23018_status = i2c_write(0b00000000, K19_I2C_TIMEOUT);        if (mcp23018_status) goto out;
@@ -186,7 +183,7 @@ uint8_t init_mcp23018(void) {
     mcp23018_status = i2c_start(I2C_ADDR_WRITE, K19_I2C_TIMEOUT);    if (mcp23018_status) goto out;
     mcp23018_status = i2c_write(GPPUA, K19_I2C_TIMEOUT);             if (mcp23018_status) goto out;
     // enable pull-up for rows in Port A
-    mcp23018_status = i2c_write(0b01111111, K19_I2C_TIMEOUT);        if (mcp23018_status) goto out;
+    mcp23018_status = i2c_write(0b11111111, K19_I2C_TIMEOUT);        if (mcp23018_status) goto out;
     // disable pull-up for columns in Port B
     // Address is automatically incremented to GPPUB.
     mcp23018_status = i2c_write(0b00000000, K19_I2C_TIMEOUT);        if (mcp23018_status) goto out;
