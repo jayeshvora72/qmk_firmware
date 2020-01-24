@@ -148,16 +148,16 @@ inline void k19_all_led_set(uint8_t n)
          LA5, LB4, LC5, LD5, LE5, LF5,      RA5, RB5, RC5, RD5, RE4, RF5,           NA5, NB5, NC5, ND5,     \
          LA6, LB5, LC6, LD6, LE6, LF6,      RA6, RB6, RC6, RD6, RE5, RF6,           NA6, NB6, NC6, ND6,     \
               LB6, LC7, LD7, LE7, LF7,      RA7, RB7, RC7, RD7, RE6,                NA7, NB7, NC7,          \
-              LB7, LC8,           LF8,      RA8,      RC8, RD8, RE7)                                        \
+              LB7, LC8, LD8,      LF8,      RA8,      RC8, RD8, RE7)                                        \
                                                                                                             \
    /* matrix positions */                                                                                   \
     {                                                                                                       \
-    { LA1, LB1, LC1, LD1, LE1, LF1,         RA1, RB1, RC1, RD1, RE1, RF1,           KC_NO, KC_NO, KC_NO, KC_NO, },   \
-    { LA2, LB2, LC2, LD2, LE2, LF2,         RA2, RB2, RC2, RD2, RE2, RF2,           KC_NO, KC_NO, KC_NO, KC_NO, },   \
+    { LA1, LB1, LC1, LD1, LE1, LF1,         RA1, RB1, RC1, RD1, RE1, RF1,           KC_NO,KC_NO,KC_NO,KC_NO},   \
+    { LA2, LB2, LC2, LD2, LE2, LF2,         RA2, RB2, RC2, RD2, RE2, RF2,           KC_NO,KC_NO,KC_NO,KC_NO},   \
     { LA3, LB3, LC3, LD3, LE3, LF3,         RA3, RB3, RC3, RD3, RE3, RF3,           NA3, NB3, NC3, ND3 },   \
     { LA4, LB4, LC4, LD4, LE4, LF4,         RA4, RB4, RC4, RD4, RE4, RF4,           NA4, NB4, NC4, ND4 },   \
     { LA5, LB5, LC5, LD5, LE5, LF5,         RA5, RB5, RC5, RD5, RE5, RF5,           NA5, NB5, NC5, ND5 },   \
     { LA6, LB6, LC6, LD6, LE6, LF6,         RA6, RB6, RC6, RD6, RE6, RF6,           NA6, NB6, NC6, ND6 },   \
-    { KC_NO, LB7, LC7, LD7, LE7, LF7,       RA7, RB7, RC7, RD7, RE7, KC_NO,         NA7, NB7, NC7, KC_NO},\
-    { KC_NO, KC_NO, LC8, KC_NO, KC_NO, LF8, RA8, KC_NO, RC8, RD8, KC_NO, KC_NO,     KC_NO, KC_NO, KC_NO, KC_NO},\
+    { KC_NO,LB7,LC7, LD7, LE7, LF7,         RA7, RB7, RC7, RD7, RE7, KC_NO,         NA7, NB7, NC7, KC_NO},\
+    { KC_NO,KC_NO,LC8,LD8,KC_NO,LF8,        RA8, KC_NO,RC8,RD8, KC_NO,KC_NO,        KC_NO,KC_NO,KC_NO,KC_NO},\
     }
