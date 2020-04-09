@@ -1,4 +1,4 @@
-/* Copyright 2019 Jayesh Vora
+/* Copyright 2020 Jayesh Vora
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,13 +27,13 @@
 #define DESCRIPTION     Ergonomic Split Keyboard with three keypads
 
 /* key matrix size */
-#define MATRIX_ROWS 8
+#define MATRIX_ROWS 7
 #define MATRIX_ROWS_NUMBER_KEYPAD 5
 
-#define MATRIX_COLS 16
+#define MATRIX_COLS 18
 //#define MATRIX_COLS_PER_SIDE (MATRIX_COLS / 2)
-#define MATRIX_COLS_LEFT_KEYPAD 6
-#define MATRIX_COLS_RIGHT_KEYPAD 6
+#define MATRIX_COLS_LEFT_KEYPAD 7
+#define MATRIX_COLS_RIGHT_KEYPAD 7
 #define MATRIX_COLS_NUMBER_KEYPAD 4
 
 
@@ -50,12 +50,13 @@
 */
 
 #define MATRIX_ROW_PINS { B0, B1, B2, B3, D2, D3, D5}
-#define MATRIX_COL_PINS { F0, F1, F4, F5, F6, F7 }
-#define UNUSED_PINS     { B4, D4, E6 }
+#define MATRIX_COL_PINS { F0, F1, F4, F5, F6, F7, D4}
+#define UNUSED_PINS     {  }
 
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
+#define NO_ACTION_TAPPING
 #define ONESHOT_TAP_TOGGLE 10  /* Tapping this number of times holds the key until tapped once again. */
 #define ONESHOT_TIMEOUT 2000  /* Time (in ms) before the one shot key is released */
 
@@ -69,7 +70,7 @@
 #define MOUSEKEY_WHEEL_DELAY 0
 */
 
-#define TAPPING_TOGGLE  2
+#define TAPPING_TOGGLE  10
 
 /* define if matrix has ghost */
 //#define MATRIX_HAS_GHOST
@@ -87,9 +88,7 @@
 // #define LOCKING_RESYNC_ENABLE
 
 /* key combination for command */
-#define IS_COMMAND() ( \
-    keyboard_report->mods == (MOD_BIT(KC_LCTL) | MOD_BIT(KC_RGUI)) \
-)
+#define IS_COMMAND() (get_mods() == MOD_MASK_SHIFT)
 
 /* We do not support backlight in keycaps */
 /* number of backlight levels */

@@ -23,11 +23,13 @@
 #define BASE    0   // Default QWERTY layer
 #define NUMBER  1   // Number Layer
 #define MEDIA   2   // Multi Media Layer
+#define DVORAK  3   // Dvorak Layer
 */
 enum layers {
   BASE,
   NUMBER,
-  MEDIA
+  MEDIA,
+  DVORAK
 };
 
 // Though the custom keycode of EPRM is not used currently, have still maintained it here
@@ -121,6 +123,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
               ____,    ____,    ____,    ____,    ____,    ____,        ____, ____, ____, ____, ____, ____,                 ____, ____, ____,
                        ____,    ____,    ____,                                      ____, ____, ____
 ),
+/* Keymap 3: Dvorak Layer
+ *
+ * ---------------------------------      ---------------------------------
+ * |   |   |   |   |   |   |   |   |      |   |   |   |   |   |   |   |   |
+ * |---+---+---+---+---+---+---+---|      |---+---+---+---+---+---+---+---|     -----------------
+ *         |   |   |   |   |   |   |      |   |   |   |   |   |   |             |   |   |   |   |
+ *     |---+---+---+---+---+---+---|      |---+---+---+---+---+---+---|         |---+---+---+---|
+ *     |   | ' | , | . | P | Y |   |      |   | F | G | C | R | L |   |         |   |   |   |   |
+ *     |---+---+---+---+---+---+---|      |---+---+---+---+---+---+---|         |---+---+---+---|
+ *     |   | A | O | E | U | I |   |      |   | D | H | T | N | S |   |         |   |   |   |   |
+ *     |---+---+---+---+---+---+---|      |---+---+---+---+---+---+---|         |---+---+---+---|
+ *     |   | ; | Q | J | K | X |   |      |   | B | M | W | V | Z |   |         |   |   |   |   |
+ *     |---+---+---+---+---+---+---|      |---+---+---+---+---+---+---|         |---+---+---+---|
+ *         |   |   |   | / |   |   |      |   |   |   |   |   |   |             |   |   |   |
+ *         |---+---+---+---+---+---|      |---+---+---+---+---+---|             -------------
+ *             |   |   |   |                      |   |   |   |
+ *             -------------                      -------------
+ */
+[DVORAK] = LAYOUT_k19(
+  ____, ____,   ____,   ____,   ____, ____, ____, ____,       ____, ____, ____, ____, ____, ____, ____, ____,
+                ____,   ____,   ____, ____, ____, ____,       ____, ____, ____, ____, ____, ____,               ____, ____, ____, ____,
+        ____, KC_QUOT,KC_COMM,KC_DOT, KC_P, KC_Y, ____,       ____, KC_F, KC_G, KC_C, KC_R, KC_L, ____,         ____, ____, ____, ____,
+        ____, KC_A,   KC_O,   KC_E,   KC_U, KC_I, ____,       ____, KC_D, KC_H, KC_T, KC_N, KC_S, ____,         ____, ____, ____, ____,
+        ____, KC_SCLN,KC_Q,   KC_J,   KC_K, KC_X, ____,       ____, KC_B, KC_M, KC_W, KC_V, KC_Z, ____,         ____, ____, ____, ____,
+              ____,   ____,   ____,KC_SLSH, ____, ____,       ____, ____, ____, ____, ____, ____,               ____, ____, ____,
+                      ____,   ____,   ____,                               ____, ____, ____
+),
 };
 
 /*
@@ -151,6 +180,7 @@ uint32_t layer_state_set_user(uint32_t state) {
   // turn off all layers related LEDs.
   k19_num_led_off();
   k19_media_led_off();
+  k19_l1_led_off();
 
   // Check if BASE layer is enabled
   if (state & 1) {
@@ -165,6 +195,11 @@ uint32_t layer_state_set_user(uint32_t state) {
   // check if media layer is enabled
   if (state & 4) {
     k19_media_led_on();
+  }
+
+  // check if dvorak layer is enabled
+  if (state & 8) {
+    k19_l1_led_on();
   }
 
   return state;

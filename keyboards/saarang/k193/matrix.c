@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Jayesh Vora
+Copyright 2020 Jayesh Vora
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -379,8 +379,8 @@ static void select_row_on_mcp23018(uint8_t row) {
 }
 
 static void select_row_on_mcp23018_number_keypad(uint8_t row) {
-    // If row number is either 0 or 1, then do nothing as these two rows do not exist on number keypad
-    if (row <= 1) {
+    // If row number is either 0 or 6, then do nothing as these rows do not exist on number keypad
+    if (row == 0 || row == 6) {
         return;
     }
 
