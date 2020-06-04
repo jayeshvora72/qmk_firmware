@@ -68,13 +68,11 @@ void k19_blink_all_leds(void)
     //k19_all_led_set(LED_BRIGHTNESS_DEFAULT);
     k19_shift_led_on();
     _delay_ms(50);
-    k19_alt_led_on();
+    k19_ralt_led_on();
     _delay_ms(50);
     k19_ctrl_led_on();
     _delay_ms(50);
-    k19_l3_led_on();
-    _delay_ms(50);
-    k19_l2_led_on();
+    k19_lalt_led_on();
     _delay_ms(50);
     k19_l1_led_on();
     _delay_ms(50);
@@ -87,18 +85,15 @@ void k19_blink_all_leds(void)
 
 
 
-
     k19_shift_led_off();
     _delay_ms(50);
-    k19_alt_led_off();
+    k19_ralt_led_off();
     _delay_ms(50);
     k19_ctrl_led_off();
     _delay_ms(50);
-    k19_l3_led_off();
+    k19_lalt_led_off();
     _delay_ms(50);
-    k19_l2_led_off();
-    _delay_ms(50);
-    k19_l3_led_off();
+    k19_l1_led_off();
     _delay_ms(50);
     k19_num_led_off();
     _delay_ms(50);
@@ -310,15 +305,29 @@ out:
     return mcp23018_status_number_keypad;
 }
 
+/* This is a deprecated function
 void led_set_kb(uint8_t usb_led) {
 	// put your keyboard LED indicator (ex: Caps Lock LED) toggling code here
   if (IS_LED_ON(usb_led, USB_LED_CAPS_LOCK)) {
 		k19_caps_led_on();
-	} else {
+  } else {
 		k19_caps_led_off();
   }
 
 	led_set_user(usb_led);
+}
+*/
+
+bool led_update_kb(led_t led_state) {
+    bool res = led_update_user(led_state);
+    if(res) {
+        if (led_state.caps_lock) {
+            k19_caps_led_on();
+        } else {
+            k19_caps_led_off();
+        }
+    }
+    return res;
 }
 
 void oneshot_mods_changed_kb(uint8_t mods) {
@@ -339,17 +348,26 @@ void oneshot_mods_changed_kb(uint8_t mods) {
     k19_ctrl_led_off();
   }
 
-  if ((mods & MOD_MASK_ALT) || (locked_mods & MOD_MASK_ALT)) {
-    k19_alt_led_on();
+  if ((mods & MOD_BIT(KC_RALT)) || (locked_mods & MOD_BIT(KC_RALT))) {
+    k19_ralt_led_on();
   }
   else
   {
-    k19_alt_led_off();
+    k19_ralt_led_off();
+  }
+
+  if ((mods & MOD_BIT(KC_LALT)) || (locked_mods & MOD_BIT(KC_LALT))) {
+    k19_lalt_led_on();
+  }
+  else
+  {
+    k19_lalt_led_off();
   }
 
   if (!mods && !locked_mods) {
     k19_ctrl_led_off();
-    k19_alt_led_off();
+    k19_ralt_led_off();
+    k19_lalt_led_off();
     k19_shift_led_off();
   }
   oneshot_mods_changed_user(mods);
@@ -373,17 +391,26 @@ void oneshot_locked_mods_changed_kb(uint8_t mods) {
     k19_ctrl_led_off();
   }
 
-  if ((mods & MOD_MASK_ALT) || (os_mods & MOD_MASK_ALT)) {
-    k19_alt_led_on();
+  if ((mods & MOD_BIT(KC_RALT)) || (os_mods & MOD_BIT(KC_RALT))) {
+    k19_ralt_led_on();
   }
   else
   {
-    k19_alt_led_off();
+    k19_ralt_led_off();
+  }
+
+  if ((mods & MOD_BIT(KC_LALT)) || (os_mods & MOD_BIT(KC_LALT))) {
+    k19_lalt_led_on();
+  }
+  else
+  {
+    k19_lalt_led_off();
   }
 
   if (!mods && !os_mods) {
     k19_ctrl_led_off();
-    k19_alt_led_off();
+    k19_ralt_led_off();
+    k19_lalt_led_off();
     k19_shift_led_off();
   }
   oneshot_locked_mods_changed_user(mods);

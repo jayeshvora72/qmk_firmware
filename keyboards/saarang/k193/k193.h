@@ -70,54 +70,52 @@ uint8_t k19_left_leds_update(void);
 
 /* To turn on the LED, set both DDR bit and Port bit to 1 */
 inline void k19_shift_led_on(void)      { writePinHigh(B7); }
+inline void k19_ralt_led_on(void)       { writePinHigh(D7); }
 inline void k19_ctrl_led_on(void)       { writePinHigh(D6); }
-inline void k19_alt_led_on(void)        { writePinHigh(D7); }
-inline void k19_media_led_on(void)      { writePinHigh(B5); }
-inline void k19_caps_led_on(void)       { writePinHigh(B6); }
-inline void k19_num_led_on(void)        { writePinHigh(C6); }
+inline void k19_lalt_led_on(void)       { writePinHigh(B4); }
 inline void k19_l1_led_on(void)         { writePinHigh(C7); }
-inline void k19_l2_led_on(void)         { writePinHigh(B4); }
-inline void k19_l3_led_on(void)         { writePinHigh(E6); }
+inline void k19_num_led_on(void)        { writePinHigh(C6); }
+inline void k19_caps_led_on(void)       { writePinHigh(B6); }
+inline void k19_media_led_on(void)      { writePinHigh(B5); }
+
 
 //inline void ergodox_right_led_on(uint8_t led) { DDRB |= (1<<(led+4)); PORTB |= (1<<(led+4)); }
 
 /* To turn off the LED, set both DDR bit and Port bit to 0 */
 inline void k19_shift_led_off(void)     { writePinLow(B7); }
+inline void k19_ralt_led_off(void)      { writePinLow(D7); }
 inline void k19_ctrl_led_off(void)      { writePinLow(D6); }
-inline void k19_alt_led_off(void)       { writePinLow(D7); }
-inline void k19_media_led_off(void)     { writePinLow(B5); }
-inline void k19_caps_led_off(void)      { writePinLow(B6); }
-inline void k19_num_led_off(void)       { writePinLow(C6); }
+inline void k19_lalt_led_off(void)      { writePinLow(B4); }
 inline void k19_l1_led_off(void)        { writePinLow(C7); }
-inline void k19_l2_led_off(void)        { writePinLow(B4); }
-inline void k19_l3_led_off(void)        { writePinLow(E6); }
+inline void k19_num_led_off(void)       { writePinLow(C6); }
+inline void k19_caps_led_off(void)      { writePinLow(B6); }
+inline void k19_media_led_off(void)     { writePinLow(B5); }
+
 
 //inline void ergodox_right_led_off(uint8_t led) { DDRB &= ~(1<<(led+4)); PORTB &= ~(1<<(led+4)); }
 
 inline void k19_all_led_on(void)
 {
     k19_shift_led_on();
+    k19_ralt_led_on();
     k19_ctrl_led_on();
-    k19_alt_led_on();
-    k19_media_led_on();
-    k19_caps_led_on();
-    k19_num_led_on();
+    k19_lalt_led_on();
     k19_l1_led_on();
-    k19_l2_led_on();
-    k19_l3_led_on();
+    k19_num_led_on();
+    k19_caps_led_on();
+    k19_media_led_on();
 }
 
 inline void k19_all_led_off(void)
 {
     k19_shift_led_off();
+    k19_ralt_led_off();
     k19_ctrl_led_off();
-    k19_alt_led_off();
-    k19_media_led_off();
-    k19_caps_led_off();
-    k19_num_led_off();
+    k19_lalt_led_off();
     k19_l1_led_off();
-    k19_l2_led_off();
-    k19_l3_led_off();
+    k19_num_led_off();
+    k19_caps_led_off();
+    k19_media_led_off();
 }
 
 /* These are probably for PWM purpose. As PWM is not enabled, so commenting them out
