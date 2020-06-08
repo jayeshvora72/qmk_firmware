@@ -148,7 +148,7 @@ inline void k19_all_led_set(uint8_t n)
 /*  -------- LEFT KEY PAD ------------      --------- RIGHT KEY PAD ----------      --- NUMBER KEY PAD --- */
 #define LAYOUT_k19(                                                                                                 \
     LA1, LA2, LB1, LC1, LD1, LE1, LF1, LG1,     RA1, RB1, RC1, RD1, RE1, RF1, RG2, RG1,                             \
-              LB3, LC2, LD2, LE2, LF2, LG3,     RA3, RB2, RC2, RD2, RE2, RF3,               NA2, NB2, NC2, ND3,     \
+         LA3, LB3, LC2, LD2, LE2, LF2, LG3,     RA3, RB2, RC2, RD2, RE2, RF3, RG3,          NA2, NB2, NC2, ND3,     \
          LA4, LB4, LC3, LD3, LE3, LF3, LG4,     RA4, RB3, RC3, RD3, RE3, RF4, RG4,          NA3, NB3, NC3, ND4,     \
          LA5, LB5, LC4, LD4, LE4, LF4, LG5,     RA5, RB4, RC4, RD4, RE4, RF5, RG5,          NA4, NB4, NC4, ND5,     \
          LA6, LB6, LC5, LD5, LE5, LF5, LG6,     RA6, RB5, RC5, RD5, RE5, RF6, RG6,          NA5, NB5, NC5, ND6,     \
@@ -159,7 +159,7 @@ inline void k19_all_led_set(uint8_t n)
     {                                                                                                               \
     { LA1, LB1, LC1, LD1, LE1, LF1, LG1,    RA1, RB1, RC1, RD1, RE1, RF1, RG1,          KC_NO,KC_NO,KC_NO,KC_NO},   \
     { LA2,KC_NO,LC2, LD2, LE2, LF2,KC_NO,   KC_NO,RB2,RC2, RD2, RE2,KC_NO,RG2,          NA2,  NB2,  NC2,  KC_NO},   \
-    { KC_NO,LB3,LC3, LD3, LE3, LF3, LG3,    RA3, RB3, RC3, RD3, RE3, RF3,KC_NO,         NA3,  NB3,  NC3,  ND3 },    \
+    { LA3, LB3, LC3, LD3, LE3, LF3, LG3,    RA3, RB3, RC3, RD3, RE3, RF3, RG3,          NA3,  NB3,  NC3,  ND3 },    \
     { LA4, LB4, LC4, LD4, LE4, LF4, LG4,    RA4, RB4, RC4, RD4, RE4, RF4, RG4,          NA4,  NB4,  NC4,  ND4 },    \
     { LA5, LB5, LC5, LD5, LE5, LF5, LG5,    RA5, RB5, RC5, RD5, RE5, RF5, RG5,          NA5,  NB5,  NC5,  ND5 },    \
     { LA6, LB6, LC6, LD6, LE6, LF6, LG6,    RA6, RB6, RC6, RD6, RE6, RF6, RG6,          NA6,  NB6,  NC6,  ND6 },    \
